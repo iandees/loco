@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>{{ team.name }}</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+</head>
+<body>
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+<div id="content">
+    <div id="people_section">
+        <div id="people_header">
+            {{ team.name }}
+        </div>
+        <div id="people">
+            &nbsp;
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
+
+<div id="map_footer">
+
+    <div class="link">
+        <a href="{{ url_for('root.index') }}">Home</a>
+        &diams;
+        <a href="{{ url_for('teams.index') }}">View all teams</a>
+        &diams;
+        <a href="{{ url_for('teams.edit', team_id=team.id) }}">Edit team {{team.name}}</a>
+    </div>
+
+    <br/>
+
+    <div>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</div>
+
+<script>
+var team_id = {{ team.id }};
+</script>
+<script src="/static/geo.js"></script>
+
+
+
+
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Teams</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+</head>
+<body>
+    <div class="error">
+        You do not have access to this resource. Apologies!
+    </div>
+
+    <div>&nbsp;</div>
+
+    {% if context %}
+    <div>
+        <small>{{ context.get('message','') }}</small>
+    </div>
+    {% endif %}
+
+    <div>
+        <a href="{{ url_for('auth.login') }}">Login</a>
+    </div>
+
+</body>
+</htmL>

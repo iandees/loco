@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Teams</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+</head>
+<body>
+    <h1>All Teams</h1>
+
+Add New Team
+<form method="POST" action="{{ url_for('teams.create') }}">
+    <input type="text" name="name" />
+    <input type="submit" value="Save" />
+</form>
+
+<table id="teams">
+{% for team in teams %}
+<tr>
+    <td>
+        <a href="{{ url_for('teams.view', team_id=team.id) }}">{{ team.name }}</a> 
+    </td>
+
+    <td>
+        ({{team.users.count()}} members)
+    </td>
+
+    <td>
+    {% if current_user.is_member_of_team(team) %}
+        <a href="{{ url_for('teams.leave', team_id=team.id) }}">leave team</a>
+    {% else %}
+        <a href="{{ url_for('teams.join', team_id=team.id) }}">join team</a>
+    {% endif %}
+</td>
+</tr>
+
+{% else %}
+<tr><td>
+    <i>No teams</i>
+</td></tr>
+{% endfor %}
+</table>
+
+<br/>
+
+<div class="link">
+    <a href="{{ url_for('root.index') }}">Home</a>
+</div>
+
+</body>
+</html>

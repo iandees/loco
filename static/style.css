@@ -1,0 +1,61 @@
+body{
+    font-family: sans-serif;
+    margin: 40 40;
+}
+
+#header{
+    font-size: 22pt;
+    font-family: serif;
+}
+#people_section{
+    width: 200px;
+    float: left;
+}
+#people_header{
+    color: #999;
+    font-style: italic;
+    font-size: 1.4em;
+    margin-bottom: 8px;
+}
+#people_section img.avatar{
+    width: 30px;
+    height: 30px;
+    display: none;
+}
+#map {
+    height: 750px;
+    width: 1000px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+#map_footer{
+    margin-left: 200px;
+}
+#footer img, #header img{
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#footer div{
+    display: inline;
+    margin-right: 20px;
+}
+div.link{
+    font-size: 1.5em;
+}
+
+table#teams{
+    margin: 10px 10px 10px 10px;
+    font-size: 1.3em;
+}
+table#teams td{
+    padding-right: 16px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.error{
+    font-size: 1.4em;
+}

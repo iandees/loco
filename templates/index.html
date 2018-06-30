@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+</head>
+<body>
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+
+<div id="content">
+    <div id="people_section">
+        <div id="people_header">
+            Everyone
+        </div>
+        <div id="people">
+            &nbsp;
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
+
+<div id="map_footer">
+    <div class="link">
+    {% if current_user.teams %}
+        {% for team in current_user.teams %}
+        <a href="{{ url_for('teams.view', team_id=team.id)  }}">{{team.name}}</a> ♦
+        {% endfor %}
+    {% endif %}
+        <a href="{{ url_for('teams.index') }}">View all teams</a>
+    </div>
+
+    <div class="link">
+    </div>
+
+    <div>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+</div>
+
+<script>
+var team_id = null;
+</script>
+<script src="/static/geo.js"></script>
+
+</body>
+</html>

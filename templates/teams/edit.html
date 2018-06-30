@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Edit {{ team.name }}</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+</head>
+<body>
+
+<h1><a href="{{ url_for('teams.view', team_id=team.id) }}">{{ team.name }}</a></h1>
+
+<form method="POST" action="{{ url_for('teams.edit', team_id=team.id) }}">
+    {% for user in all_users %}
+    <input type="checkbox" name="users" value="{{ user.id }}" id="{{ user.id }}" {{ 'checked' if user in users_in_team else '' }}/>
+     <label for="{{ user.id }}">{{ user.name }}</label>
+    <br/>
+    {% endfor %}
+    <br/>
+    <input type="submit" value="Save"/>
+</form>
+
+<br/><br/>
+<a href="{{ url_for('teams.delete', team_id=team.id) }}" onclick="return confirm('Are you sure you want to delete this team?');">🗑 delete team {{team.name}}</a>
+<br/><br/>
+
+<a href="{{ url_for('teams.index') }}">Teams</a>
+
+</body>
+</html>
