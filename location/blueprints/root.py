@@ -11,6 +11,7 @@ from flask_login import (
 
 root_bp = Blueprint('root', __name__)
 
+
 @root_bp.route('/')
 def index():
     if current_user.is_authenticated:

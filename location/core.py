@@ -17,7 +17,7 @@ oauth = OAuth()
 login_manager = LoginManager()
 cache = Cache()
 
+
 @login_manager.unauthorized_handler
 def unauthorized():
     return render_template('restricted.html'), 400
-

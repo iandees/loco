@@ -19,11 +19,13 @@ from flask_login import (
 from location.core import db, oauth, login_manager
 from location import models
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return models.User.query.get(int(user_id))
 
 auth_bp = Blueprint('auth', __name__)
+
 
 @auth_bp.route('/login')
 def login():
@@ -34,11 +36,13 @@ def login():
 
     return oauth.google.authorize(callback=callback)
 
+
 @auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     return render_template('logged_out.html')
+
 
 @auth_bp.route('/login/authorized')
 def authorized():
