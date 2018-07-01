@@ -1,5 +1,6 @@
 import os
 
+
 class Base(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
@@ -12,12 +13,15 @@ class Base(object):
     SECRET_KEY = 'development key'
     DEBUG = True
 
+
 class Heroku(Base):
     CACHE_TYPE = 'redis'
     CACHE_REDIS_URL = os.environ.get('REDIS_URL')
 
+
 class Production(Heroku):
     pass
+
 
 class Local(Base):
     CACHE_TYPE = 'simple'

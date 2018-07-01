@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 from location.core import db
 
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -26,6 +27,7 @@ class User(db.Model, UserMixin):
     def most_recent_location(self):
         return self.locations.first()
 
+
 class Location(db.Model):
     __tablename__ = "locations"
 
@@ -35,6 +37,7 @@ class Location(db.Model):
     lon = db.Column(db.Float)
     description = db.Column(db.String(200), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
 
 class Team(db.Model):
     __tablename__ = "teams"

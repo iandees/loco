@@ -14,6 +14,7 @@ from location import models
 
 locations_bp = Blueprint('locations', __name__)
 
+
 @locations_bp.route('/locations/me', methods=['POST'])
 @login_required
 def save():
@@ -30,6 +31,7 @@ def save():
     cache.delete_memoized(get_locations)
 
     return jsonify({"location": "added"})
+
 
 @locations_bp.route('/locations.geojson', methods=['GET'])
 # TODO: reenable caching.

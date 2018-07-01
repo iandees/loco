@@ -6,6 +6,7 @@ from werkzeug.contrib.fixers import ProxyFix
 from location.core import env, db, migrate, oauth, login_manager, cache
 from location import blueprints
 
+
 def create_app(package_name):
     app = Flask(package_name, instance_relative_config=True)
 
