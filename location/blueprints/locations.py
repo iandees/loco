@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import (
+    current_app,
     jsonify,
     request,
     Blueprint,
@@ -56,7 +57,7 @@ def get_locations():
                     "name": user.name,
                     "description": loc.description,
                     "id": user.id,
-                    "avatar": user.avatar,
+                    "avatar": user.avatar or current_app.config.get('DEFAULT_AVATAR'),
                     "last_updated": loc.created_at.isoformat() + '+00:00',
                 },
                 "geometry": {

@@ -1,12 +1,18 @@
 import os
 
+from location.oauth_providers import GOOGLE
+
 
 class Base(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
+
     ALLOWED_DOMAIN = os.environ.get('ALLOWED_DOMAIN')
+    DEFAULT_AVATAR = os.environ.get('DEFAULT_AVATAR', 'static/images/avatars/default.png')
+
+    OAUTH_PROVIDER = os.environ.get('OAUTH_PROVIDER', GOOGLE)
+    OAUTH_CLIENT_ID = os.environ.get('OAUTH_CLIENT_ID')
+    OAUTH_CLIENT_SECRET = os.environ.get('OAUTH_CLIENT_SECRET')
 
     ON_HEROKU = os.environ.get('ON_HEROKU')
 

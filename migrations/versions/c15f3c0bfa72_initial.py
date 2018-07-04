@@ -25,8 +25,8 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=True),
     sa.Column('avatar', sa.String(length=200), nullable=True),
     sa.Column('active', sa.Boolean(), nullable=True),
-    sa.Column('google_id', sa.String(length=100), nullable=True),
-    sa.Column('google_access_token', sa.Text(), nullable=True),
+    sa.Column('oauth_id', sa.String(length=100), nullable=True),
+    sa.Column('oauth_access_token', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )

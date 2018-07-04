@@ -33,8 +33,8 @@ def login():
         return redirect(url_for('root.index'))
 
     callback = url_for('auth.authorized', _external=True)
-
-    return oauth.google.authorize(callback=callback)
+    provider = current_app.config.get('OAUTH_PROVIDER')
+    return oauth.remote_apps.get(provider).authorize(callback=callback)
 
 
 @auth_bp.route('/logout')
@@ -46,7 +46,8 @@ def logout():
 
 @auth_bp.route('/login/authorized')
 def authorized():
-    resp = oauth.google.authorized_response()
+    provider = current_app.config.get('OAUTH_PROVIDER')
+    resp = oauth.remote_apps.get(provider).authorized_response()
 
     if resp is None:
         message = "Access denied: reason={} error={}".format(
@@ -61,30 +62,28 @@ def authorized():
         )
         return render_template('restricted.html', context=dict(message=message)), 400
 
-    session['google_token'] = (resp['access_token'], '')
-    info = oauth.google.get('userinfo')
+    session['access_token'] = (resp['access_token'], '')
+    provider = current_app.config.get('OAUTH_PROVIDER')
+    identity_endpoint = current_app.oauth_provider.identity_endpoint()
+    auth_response = oauth.remote_apps.get(provider).get(identity_endpoint)
 
-    allowed_domain = current_app.config.get("ALLOWED_DOMAIN")
-    if allowed_domain:
-        if not info.data['hd'] == allowed_domain:
-            message = "Your email is not authorized"
-            return render_template('restricted.html', context=dict(message=message)), 400
+    allowed_domain = current_app.config.get('ALLOWED_DOMAIN')
+    if allowed_domain and allowed_domain != current_app.oauth_provider.user_domain(auth_response):
+        message = "Your email is not authorized"
+        return render_template('restricted.html', context=dict(message=message)), 400
 
-    user = models.User.query.filter_by(google_id=info.data['id']).first()
+    user = models.User.query.filter_by(oauth_id=auth_response.data['id']).first()
 
     # Save a refreshed access token
-    if user and user.google_access_token != resp['access_token']:
-        user.google_access_token = resp['access_token']
+    if user and user.oauth_access_token != resp['access_token']:
+        user.oauth_access_token = resp['access_token']
         db.session.add(user)
         db.session.commit()
 
     if not user:
         user = models.User(
-            google_id=info.data['id'],
-            google_access_token=resp['access_token'],
-            email=info.data['email'],
-            avatar=info.data['picture'],
-            name=info.data['name'],
+            oauth_access_token=resp['access_token'],
+            **current_app.oauth_provider.user_info(auth_response)
         )
         db.session.add(user)
         db.session.commit()

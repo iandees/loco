@@ -1,4 +1,5 @@
 import datetime
+
 from flask_login import UserMixin
 from sqlalchemy.orm import relationship
 
@@ -14,8 +15,8 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), nullable=True)
     avatar = db.Column(db.String(200))
     active = db.Column(db.Boolean, default=False)
-    google_id = db.Column(db.String(100))
-    google_access_token = db.Column(db.Text)
+    oauth_id = db.Column(db.String(100))
+    oauth_access_token = db.Column(db.Text)
 
     locations = relationship("Location", lazy="dynamic", order_by="desc(Location.created_at)")
 
