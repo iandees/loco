@@ -14,7 +14,7 @@ Once you login with your Google or Microsoft account, your browser will determin
 
 1. (Optional) The app can also support Microsoft OAuth to log in users.
 
-    Create an OAuth application by following these instructions to [create an Azure AD web app](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code#register-your-application-with-your-ad-tenant). Don't forget to save the OAuth client ID and secret for the next step.
+    Create an OAuth application by following these instructions to [create an Azure Active Directory web app](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code#register-your-application-with-your-ad-tenant). Don't forget to save the OAuth client ID and secret for the next step.
 
     You'll also need to set the environment variable `OAUTH_PROVIDER` to `microsoft`.
 
