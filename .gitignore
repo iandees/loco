@@ -105,3 +105,6 @@ venv.bak/
 
 .DS_Store
 local.db
+
+# Don't save avatar images in git
+static/images/avatars

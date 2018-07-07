@@ -3,8 +3,8 @@ from flask import Flask, session
 from flask_sslify import SSLify
 from werkzeug.contrib.fixers import ProxyFix
 
-from location.core import env, db, migrate, oauth, login_manager, cache
-from location import blueprints
+from location import blueprints, oauth_providers
+from location.core import cache, db, env, login_manager, migrate, oauth
 
 
 def create_app(package_name):
@@ -20,24 +20,17 @@ def create_app(package_name):
     sslify = SSLify(app)
 
     oauth.init_app(app)
-    google = oauth.remote_app(
-        'google',
-        consumer_key=app.config.get('GOOGLE_CLIENT_ID'),
-        consumer_secret=app.config.get('GOOGLE_CLIENT_SECRET'),
-        request_token_params={
-            'scope': 'email profile',
-            'hd': app.config.get('ALLOWED_DOMAIN'),
-        },
-        base_url='https://www.googleapis.com/oauth2/v1/',
-        request_token_url=None,
-        access_token_method='POST',
-        access_token_url='https://accounts.google.com/o/oauth2/token',
-        authorize_url='https://accounts.google.com/o/oauth2/auth',
+    app.oauth_provider = oauth_providers.get_provider(
+        app.config.get('OAUTH_PROVIDER'),
+        app.config.get('OAUTH_CLIENT_ID'),
+        app.config.get('OAUTH_CLIENT_SECRET'),
+        app.config.get('ALLOWED_DOMAIN')
     )
+    oauth_app = oauth.remote_app(**app.oauth_provider.settings())
 
-    @google.tokengetter
+    @oauth_app.tokengetter
     def get_access_token():
-        return session.get('google_token')
+        return session.get('access_token')
 
     login_manager.init_app(app)
 
